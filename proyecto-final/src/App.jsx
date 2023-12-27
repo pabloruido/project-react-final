@@ -16,7 +16,7 @@ import { AddProduct } from './AddProduct';
 import { UpdateProduct } from './UpdateProduct';
 import { DeleteProduct } from './DeleteProduct';
 import { AuthProvider } from './AuthContext';
-import { UserRoute } from './UserRoute';
+import { CartProvider } from './CartContext';
 import { AdminRoute } from './AdminRoute';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -24,10 +24,9 @@ const queryClient = new QueryClient();
 
 export const App = () => (
 
-
-
   <QueryClientProvider client={queryClient}>
     <Router>
+      <CartProvider>
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -69,6 +68,7 @@ export const App = () => (
           </Route>
         </Routes>
       </AuthProvider>
+      </CartProvider>
     </Router>
   </QueryClientProvider>
 

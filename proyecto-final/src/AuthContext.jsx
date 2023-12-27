@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 
 export const AuthContext = createContext();
@@ -29,6 +29,14 @@ const getProfile = async (accessToken) => {
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+
+    useEffect(() => {
+      const storageUser = localStorage.getItem('user');
+
+      if (storageUser) {
+        setUser(JSON.parse(storageUser));
+      }
+    }, [] );
   
     const login = async (userData) => {
       setUser(userData);
@@ -38,6 +46,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const profileData = await getProfile(accessToken);
         setUser(profileData);
+        localStorage.setItem('user', JSON.stringify(profileData));
         console.log(profileData)
       } catch (error) {
         console.error('Error al obtener la data:', error);
@@ -46,10 +55,12 @@ export const AuthProvider = ({ children }) => {
   
     const register = (userData) => {
       setUser(userData);
+      localStorage.setItem('user', JSON.stringify(userData));
     };
   
     const logout = () => {
       setUser(null);
+      localStorage.removeItem('user');
     };
   
     return (

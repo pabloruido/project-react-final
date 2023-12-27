@@ -1,13 +1,25 @@
-import React, { useContext } from "react";
-import { AuthContext } from "./AuthContext";
+import React from 'react';
+import { useCart } from './CartContext';
 
 export const Cart = () => {
-  const { user } = useContext(AuthContext);
+  const { cartItems, eliminarDelCarrito, limpiarCarrito } = useCart();
 
-  console.log("Nombre del usuario:", user ? user.name : "No disponible");
-  console.log("Rol del usuario:", user ? user.role : "No disponible");
-
- 
+  return (
+    <div>
+      <h2>Carrito de compras</h2>
+      {cartItems.length === 0 ? (
+        <p>El carrito está vacío</p>
+      ) : (
+        <ul>
+          {cartItems.map((item) => (
+            <li key={item.id}>
+              {item.name} - <button onClick={() => eliminarDelCarrito(item.id)}>Eliminar</button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <button onClick={limpiarCarrito}>Vaciar Carrito</button>
+    </div>
+  );
 };
 
-export default Cart;
