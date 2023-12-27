@@ -18,7 +18,7 @@ import { DeleteProduct } from './DeleteProduct';
 import { AuthProvider } from './AuthContext';
 import { CartProvider } from './CartContext';
 import { AdminRoute } from './AdminRoute';
-import { Home } from './home';
+import { Home } from './Home';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
