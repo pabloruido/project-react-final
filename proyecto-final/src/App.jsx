@@ -1,6 +1,6 @@
 import './App.css'
 import { Layout } from './layout'
-import Home from './home'; import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './Login';
 import { Register } from './Register';
 import { Categories } from './Categories';
@@ -18,6 +18,7 @@ import { DeleteProduct } from './DeleteProduct';
 import { AuthProvider } from './AuthContext';
 import { CartProvider } from './CartContext';
 import { AdminRoute } from './AdminRoute';
+import { Home } from './home';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();

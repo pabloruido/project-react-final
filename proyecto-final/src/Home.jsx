@@ -1,8 +1,5 @@
 
-function  Home ( name ) {
-
-    
-    
+export const Home = () =>  {
 
     return (
         <>
@@ -11,5 +8,3 @@ function  Home ( name ) {
         </>
     )
 }
-
-export default Home; 
