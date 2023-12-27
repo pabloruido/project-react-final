@@ -29,12 +29,17 @@ const getProfile = async (accessToken) => {
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [userId, setUserId] = useState(null); 
 
     useEffect(() => {
       const storageUser = localStorage.getItem('user');
+      const storedUserId = localStorage.getItem('userId');
 
       if (storageUser) {
         setUser(JSON.parse(storageUser));
+      }
+      if (storedUserId) {
+        setUserId(parseInt(storedUserId, 10));
       }
     }, [] );
   
@@ -47,7 +52,9 @@ export const AuthProvider = ({ children }) => {
         const profileData = await getProfile(accessToken);
         setUser(profileData);
         localStorage.setItem('user', JSON.stringify(profileData));
-        console.log(profileData)
+        localStorage.setItem('userId', profileData.id);
+        setUserId(profileData.id);
+        console.log(profileData.id)
       } catch (error) {
         console.error('Error al obtener la data:', error);
       }
@@ -56,15 +63,17 @@ export const AuthProvider = ({ children }) => {
     const register = (userData) => {
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('userId', userData.id);
     };
   
     const logout = () => {
       setUser(null);
       localStorage.removeItem('user');
+      localStorage.removeItem('userId');
     };
   
     return (
-      <AuthContext.Provider value={{ user, login, register, logout }}>
+      <AuthContext.Provider value={{ user, userId, login, register, logout }}>
         {children}
       </AuthContext.Provider>
     );

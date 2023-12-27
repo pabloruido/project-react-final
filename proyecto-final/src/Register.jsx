@@ -36,7 +36,7 @@ export const Register = () => {
     mutationFn: registerMutation,
     onSuccess: (data) => {
       console.log('Registro exitoso', data);
-      register(data);
+  
       navigate('/login');
     },
     onError: (data) => {

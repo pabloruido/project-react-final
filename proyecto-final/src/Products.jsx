@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from './AuthContext';
+import { useCart } from './CartContext';
+
 
 
 
@@ -8,6 +11,9 @@ export const Products = () => {
     const [productos, setProductos] = useState([]);
     const [error, setError] = useState(null);
     const [errorCargaAPI, setErrorCargaAPI] = useState(false);
+    const { user } = useAuth();
+    const { agregarAlCarrito } = useCart();
+    
 
     const fetchProductos = async () => {
         try {
@@ -42,11 +48,22 @@ export const Products = () => {
                         <p>Precio: ${producto.price}</p>
                         <p>Descripción y caracteristicas {producto.description}</p>
                         <p>Categoria: {producto.category.name}</p>
-                        <Link to={`/products/${producto.id}`}>Ver detalles</Link>
-                        <Link to="/products/addproduct">
-                        <button>Agregar producto </button>
-                        </Link>
-                        
+                        <Link to={`/products/${producto.id}`}>Ver detalles. </Link>
+                        {user?.role === 'admin' ? (
+                            <Link to="/products/addproduct">
+                                <button>Cargar nuevo producto </button>
+                            </Link>) : ("")}
+                        {user !== null ? (
+                            <button onClick={() => agregarAlCarrito(producto)}>
+                                Agregar producto al carrito
+                            </button>
+                        ) : (
+                            <button>
+                                <Link to={'/login'}> Debes estar logueado para comprar </Link>
+                            </button>
+                        )}
+                        <hr></hr>
+
                     </li>
                 )
                 )}

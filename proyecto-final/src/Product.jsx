@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useCart } from './CartContext';
+import { useAuth } from './AuthContext';
 
 
 export const Product = () => {
@@ -8,6 +9,7 @@ export const Product = () => {
     const [producto, setProducto] = useState(null);
     const [error, setError] = useState(null);
     const { agregarAlCarrito } = useCart();
+    const { user } = useAuth();
 
     const fetchProductoById = async () => {
         try {
@@ -56,14 +58,27 @@ export const Product = () => {
             <p>Precio: ${producto.price} de contado efectivo </p>
             <p>Descripción {producto.description} </p>
             <p>Categoria: {producto.category.name} </p>
+            { user !== null ? (
             <button onClick={() => agregarAlCarrito(producto)}>
                 Agregar al Carrito
             </button>
+            ) : (
+                <button> 
+                    <Link to={'/login' }> Debes estar logueado para comprar </Link>
+                </button>
+            )}
+            {user?.role === 'admin'&& 
+            (<button>
+                <Link to={`/products/updateproduct/${producto.id}`}>
+                    Actualizar Producto
+                    </Link>
+            </button>)}
+            {user?.role === 'admin'&& (
             <button>
-                <Link to={`/products/updateproduct/${producto.id}`}>Actualizar Producto</Link>
-                <br />
-                <Link to={`/products/deleteproduct/${producto.id}`}>Eliminar Producto</Link>
-            </button>
+                <Link to={`/products/deleteproduct/${producto.id}`}>
+                    Eliminar Producto
+                    </Link>
+            </button>)}
 
         </div>
     )
