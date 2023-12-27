@@ -1,8 +1,10 @@
 import React from 'react';
 import { useCart } from './CartContext';
+import { v4 as uuidv4 } from 'uuid';
 
 export const Cart = () => {
   const { cartItems, eliminarDelCarrito, limpiarCarrito } = useCart();
+  console.log(cartItems)
 
   return (
     <div>
@@ -12,8 +14,9 @@ export const Cart = () => {
       ) : (
         <ul>
           {cartItems.map((item) => (
-            <li key={item.id}>
-              {item.name} - <button onClick={() => eliminarDelCarrito(item.id)}>Eliminar</button>
+            
+            <li key={item.key}>
+              {item.title} ${item.price} - <button onClick={() => eliminarDelCarrito(item.key)}>Eliminar</button>
             </li>
           ))}
         </ul>
