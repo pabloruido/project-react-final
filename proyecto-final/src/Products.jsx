@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { useCart } from './CartContext';
 import './styles/products.css';
@@ -11,27 +11,31 @@ export const Products = () => {
     const [errorCargaAPI, setErrorCargaAPI] = useState(false);
     const { user } = useAuth();
     const { agregarAlCarrito } = useCart();
+    const location = useLocation();
+  const searchParam = new URLSearchParams(location.search).get('title') || '';
  
 
 
     const fetchProductos = async () => {
-        try {
-            const response = await fetch('https://api.escuelajs.co/api/v1/products')
-            if (!response.ok) {
-                throw new Error('La carga ha fallado. Intente nuevamente')
-            }
-            const data = await response.json();
-            setProductos(data);
-        } catch (error) {
-            setError(error.message);
-            console.error(error);
-            setErrorCargaAPI(true);
-        }
-    }
+    try {
+      const response = await fetch(`https://api.escuelajs.co/api/v1/products?title=${searchParam}`);
+      
+      if (!response.ok) {
+        throw new Error('La carga ha fallado. Intente nuevamente');
+      }
 
-    useEffect(() => {
-        fetchProductos();
-    }, []);
+      const data = await response.json();
+      setProductos(data);
+    } catch (error) {
+      setError(error.message);
+      console.error(error);
+      setErrorCargaAPI(true);
+    }
+  };
+
+  useEffect(() => {
+    fetchProductos();
+  }, [searchParam]);
 
     return (
         <div>
