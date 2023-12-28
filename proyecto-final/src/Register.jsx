@@ -58,7 +58,7 @@ export const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}className="formLogin">
       <label>
         Nombre:
         <input
@@ -96,7 +96,9 @@ export const Register = () => {
         />
       </label>
       <br />
+      <div className="button-container2">
       <button type="submit">Registrarse</button>
+      </div>
     </form>
   );
 };

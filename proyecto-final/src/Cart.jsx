@@ -21,7 +21,9 @@ export const Cart = () => {
           ))}
         </ul>
       )}
+      <div className="button-container2">
       <button onClick={limpiarCarrito}>Vaciar Carrito</button>
+      </div>
     </div>
   );
 };

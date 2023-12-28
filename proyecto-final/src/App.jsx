@@ -1,4 +1,4 @@
-import './App.css'
+
 import { Layout } from './layout'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './Login';
@@ -36,7 +36,6 @@ export const App = () => (
               <Route index element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-
               <Route path="/categories" element={<Categories />} />
               <Route path="/categories/:CategoryId/products" element={<Category />} />
               <Route path="/categories/addcategory" element={
